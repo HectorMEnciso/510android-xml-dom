@@ -1,0 +1,2 @@
+C:\Users\Hector\Desktop\510android-xml-dom\app\build\intermediates\classes\debug
+C:\Users\Hector\Desktop\510android-xml-dom\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-5182b4c665e950fce4b419e9b097ed7f3518c709.jar
