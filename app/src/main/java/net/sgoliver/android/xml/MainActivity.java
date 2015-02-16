@@ -49,14 +49,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 for(int i=0;i<noticiasList.size();i++){
                     {
-                        String fecha = controller.getAllNoticias().get(i).get("pubDate").toString();
-                       String titulo = controller.getAllNoticias().get(i).get("title").toString();
+                        //String titulo= noticiasList.get(i).get("title");
+                       // String fecha= noticiasList.get(i).get("pubDate");
 
-                        if (!controller.existeNoticia(titulo, fecha)){
+                       Noticia n = noticiasList.get(i);
+
+                        if (!controller.existeNoticia(n.getTitulo(), n.getGuid())){
                             controller.insertNoticia(noticias.get(i));
                         }
-
-
                     }
                 }
             }
