@@ -50,11 +50,11 @@ public class MainActivity extends Activity {
                 for(int i=0;i<noticiasList.size();i++){
                     {
                         //String titulo= noticiasList.get(i).get("title");
-                       // String fecha= noticiasList.get(i).get("pubDate");
+                       String fecha= noticiasList.get(i).get("pubDate");
 
-                       Noticia n = noticiasList.get(i);
+                      // Noticia n = noticiasList.get(i);
 
-                        if (!controller.existeNoticia(n.getTitulo(), n.getGuid())){
+                        if (!controller.existeNoticia(fecha)){
                             controller.insertNoticia(noticias.get(i));
                         }
                     }

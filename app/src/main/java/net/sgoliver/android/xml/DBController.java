@@ -68,9 +68,9 @@ public class DBController extends SQLiteOpenHelper {
         return wordList;
     }
 
-    public boolean existeNoticia (String tit, String pDate){
+    public boolean existeNoticia (String pDate){
         boolean existe=false;
-        String selectQuery = "SELECT count(*) FROM Noticias where title=" +  tit + "and pubDate=" + pDate;
+        String selectQuery = "SELECT count(*) FROM Noticias where pubDate like %" + pDate;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.getInt(0)==0){
