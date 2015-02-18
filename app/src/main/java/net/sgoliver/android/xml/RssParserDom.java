@@ -38,9 +38,9 @@ public class RssParserDom
         }
 	}
 
-    public List<Noticia> parse() {
+    public ArrayList<Noticia> parse() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<Noticia> noticias = new ArrayList<Noticia>();
+        ArrayList<Noticia> noticias = new ArrayList<Noticia>();
         
         try 
         {

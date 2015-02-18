@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	private Button btnCargar,btnInsertar;
 	private TextView txtResultado;
     DBController controller = new DBController(this);
-	private List<Noticia> noticias;
+	private ArrayList<Noticia> noticias= new ArrayList<Noticia>();
     HashMap<String, String> queryValues =  new  HashMap<String, String>();
    private ArrayList<HashMap<String, String>> noticiasList;
 	@Override
