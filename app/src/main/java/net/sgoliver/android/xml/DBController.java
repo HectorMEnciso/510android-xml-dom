@@ -35,14 +35,14 @@ public class DBController extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    public void insertNoticia(Noticia n) {
+    public void insertNoticia(HashMap<String, String> queryValues) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("title", n.getTitulo());
-        values.put("link", n.getLink());
-        values.put("description", n.getDescripcion());
-        values.put("guid", n.getGuid());
-        values.put("pubDate", n.getpubDate());
+        values.put("title",queryValues.get("title"));
+        values.put("link",queryValues.get("link"));
+        values.put("description", queryValues.get("description"));
+        values.put("guid", queryValues.get("guid"));
+        values.put("pubDate", queryValues.get("pubDate"));
         database.insert("Noticias", null, values);
         database.close();
     }
@@ -70,14 +70,14 @@ public class DBController extends SQLiteOpenHelper {
 
     public boolean existeNoticia (String pDate){
         boolean existe=false;
-        String selectQuery = "SELECT count(*) FROM Noticias where pubDate like %" + pDate;
+        String selectQuery = "SELECT * FROM Noticias where pubDate='" + pDate+"'";
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        if (cursor.getInt(0)==0){
-            existe=false;
+        if (cursor.moveToFirst()){
+            existe=true;
         }
         else {
-            existe = true;
+            existe = false;
         }
         return existe;
     }

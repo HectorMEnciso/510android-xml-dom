@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     DBController controller = new DBController(this);
 	private List<Noticia> noticias;
     HashMap<String, String> queryValues =  new  HashMap<String, String>();
-    ArrayList<HashMap<String, String>> noticiasList;
+   private ArrayList<HashMap<String, String>> noticiasList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,12 +33,14 @@ public class MainActivity extends Activity {
         btnInsertar = (Button)findViewById(R.id.InsertarBD);
 		btnCargar = (Button)findViewById(R.id.btnCargar);
 		txtResultado = (TextView)findViewById(R.id.txtResultado);
+
         noticiasList=controller.getAllNoticias();
 
 
 
 		btnCargar.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+                noticias.clear();
 				CargarXmlTask tarea = new CargarXmlTask();
 		        tarea.execute("http://212.170.237.10/rss/rss.aspx");
 			}
@@ -47,15 +49,21 @@ public class MainActivity extends Activity {
         btnInsertar.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                for(int i=0;i<noticiasList.size();i++){
+                for(int i=0;i<noticias.size();i++){
                     {
                         //String titulo= noticiasList.get(i).get("title");
-                       String fecha= noticiasList.get(i).get("pubDate");
+                       String fecha= noticias.get(i).getpubDate();
 
-                      // Noticia n = noticiasList.get(i);
+
 
                         if (!controller.existeNoticia(fecha)){
-                            controller.insertNoticia(noticias.get(i));
+                            HashMap<String, String> queryValues =  new  HashMap<String, String>();
+                            queryValues.put("title",noticias.get(i).getTitulo());
+                            queryValues.put("link",noticias.get(i).getLink());
+                            queryValues.put("description",noticias.get(i).getDescripcion());
+                            queryValues.put("guid",noticias.get(i).getGuid());
+                            queryValues.put("pubDate",noticias.get(i).getpubDate());
+                            controller.insertNoticia(queryValues);
                         }
                     }
                 }
@@ -73,6 +81,28 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void onStop(){
+        super.onStop();
+        for(int i=0;i<noticias.size();i++){
+            {
+                //String titulo= noticiasList.get(i).get("title");
+                String fecha= noticias.get(i).getpubDate();
+
+
+
+                if (!controller.existeNoticia(fecha)){
+                    HashMap<String, String> queryValues =  new  HashMap<String, String>();
+                    queryValues.put("title",noticias.get(i).getTitulo());
+                    queryValues.put("link",noticias.get(i).getLink());
+                    queryValues.put("description",noticias.get(i).getDescripcion());
+                    queryValues.put("guid",noticias.get(i).getGuid());
+                    queryValues.put("pubDate",noticias.get(i).getpubDate());
+                    controller.insertNoticia(queryValues);
+                }
+            }
+        }
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -84,11 +114,10 @@ public class MainActivity extends Activity {
 	private class CargarXmlTask extends AsyncTask<String,Integer,Boolean> {
 		 
 	    protected Boolean doInBackground(String... params) {
-	 
-	    	RssParserDom saxparser = new RssParserDom(params[0]);
-	        
+
+            RssParserDom saxparser = new RssParserDom(params[0]);
+
 			noticias = saxparser.parse();//parsear y guarda datos en lista de noticias
-	 
 	        return true;
 	    }
 	    
