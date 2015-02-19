@@ -42,7 +42,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
                 noticias.clear();
 				CargarXmlTask tarea = new CargarXmlTask();
-		        tarea.execute("http://212.170.237.10/rss/rss.aspx");
+		       // tarea.execute("http://212.170.237.10/rss/rss.aspx");
+               tarea.execute("http://10.0.2.2/Noticias.xml");
 			}
 		});
 
@@ -53,8 +54,6 @@ public class MainActivity extends Activity {
                     {
                         //String titulo= noticiasList.get(i).get("title");
                        String fecha= noticias.get(i).getpubDate();
-
-
 
                         if (!controller.existeNoticia(fecha)){
                             HashMap<String, String> queryValues =  new  HashMap<String, String>();
@@ -88,8 +87,6 @@ public class MainActivity extends Activity {
                 //String titulo= noticiasList.get(i).get("title");
                 String fecha= noticias.get(i).getpubDate();
 
-
-
                 if (!controller.existeNoticia(fecha)){
                     HashMap<String, String> queryValues =  new  HashMap<String, String>();
                     queryValues.put("title",noticias.get(i).getTitulo());
@@ -120,7 +117,6 @@ public class MainActivity extends Activity {
 			noticias = saxparser.parse();//parsear y guarda datos en lista de noticias
 	        return true;
 	    }
-	    
 	    protected void onPostExecute(Boolean result) {
 	    	
 	    	//Tratamos la lista de noticias
